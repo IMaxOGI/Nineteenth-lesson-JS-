@@ -12,14 +12,15 @@ body {
 .right-block {
   display: grid;
   margin-top: 50px;
-  grid-template-columns: 0.1fr 0.1fr 0.1fr 0.1fr;
+  grid-template-columns: 0.1fr 0.1fr 0.1fr 0.1fr; */
   grid-gap: 5px;
-  padding-left: 0;
+   padding-left: 0;
 }
 
 .left-block {
   margin-top: 47px;
   padding-right: 30px;
+  padding-left: 30px;
 }
 
 .text {

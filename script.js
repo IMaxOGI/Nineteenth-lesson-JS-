@@ -35,7 +35,7 @@ function createNewDivEl(elements) {
     const newDivEl = document.createElement("div");
     newDivEl.className = "text";
     newDivEl.innerHTML = el.title;
-    newDivEl.setAttribute("data-url", el.userId);
+    newDivEl.setAttribute("data-url", el.id);
     blockWithText.appendChild(newDivEl);
   });
 }
