@@ -50,7 +50,7 @@ function createNewImgEl(elements) {
   elements.forEach((el) => {
     const newImage = document.createElement("img");
     newImage.className = "photo";
-    newImage.setAttribute("src", el.url);
+    newImage.setAttribute("src", el.thumbnailUrl);
     newImage.setAttribute("alt", el.title);
     blockWithPhoto.appendChild(newImage);
   });
