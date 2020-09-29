@@ -1,54 +1,57 @@
 const blockWithText = document.getElementById("block-with-text");
 const blockWithPhoto = document.getElementById("block-with-photo");
 
-const urlLinks = [];
-
 document.addEventListener("DOMContentLoaded", getAlbums);
-document.addEventListener("click", loadAlbum);
+document.addEventListener("click", clickHandler);
 
 function getAlbums() {
   fetch("https://jsonplaceholder.typicode.com/albums")
     .then((response) => response.json())
-    .then((json) => createNewEl(json));
+    .then((result) => createNewDivEl(result))
+    .then(() => fetchAlbum(1))
+    .catch((error) => console.error("Error occured in getAlbums: ", error));
 }
 
-function loadAlbum(event) {
+let temporaryAlbumNumber = null;
+function fetchAlbum(albumNumber) {
+  if (albumNumber !== temporaryAlbumNumber) {
+    fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumNumber}`)
+      .then((response) => response.json())
+      .then((result) => createNewImgEl(result))
+      .catch((error) => console.error("Error occured in fetchAlbum: ", error));
+  }
+  temporaryAlbumNumber = albumNumber;
+}
+
+function clickHandler(event) {
   if (event.target.matches(".text")) {
-    console.log("clicked ", event.target.getAttribute("data-url"));
+    const albumNumber = event.target.getAttribute("data-url");
+    fetchAlbum(albumNumber);
   }
 }
 
-function createNewEl(elements) {
-  console.log(elements);
+function createNewDivEl(elements) {
   elements.forEach((el) => {
-    const newUserInfoWrapper = document.createElement("div");
-    newUserInfoWrapper.className = "text";
-    newUserInfoWrapper.innerHTML = el.title;
-    newUserInfoWrapper.setAttribute("data-url", el.userId);
-    blockWithText.appendChild(newUserInfoWrapper);
+    const newDivEl = document.createElement("div");
+    newDivEl.className = "text";
+    newDivEl.innerHTML = el.title;
+    newDivEl.setAttribute("data-url", el.userId);
+    blockWithText.appendChild(newDivEl);
   });
 }
 
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=1")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
-
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=2")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
-
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=3")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
-
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=4")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
-
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=5")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
-
-// fetch("https://jsonplaceholder.typicode.com/photos?albumId=6")
-//   .then((response) => response.json())
-//   .then((json) => console.log(json));
+function createNewImgEl(elements) {
+  const images = document.querySelectorAll(".photo");
+  if (images.length > 0) {
+    images.forEach((img) => {
+      blockWithPhoto.removeChild(img);
+    });
+  }
+  elements.forEach((el) => {
+    const newImage = document.createElement("img");
+    newImage.className = "photo";
+    newImage.setAttribute("src", el.url);
+    newImage.setAttribute("alt", el.title);
+    blockWithPhoto.appendChild(newImage);
+  });
+}

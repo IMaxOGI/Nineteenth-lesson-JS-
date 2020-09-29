@@ -12,7 +12,6 @@ body {
 .right-block {
   display: grid;
   margin-top: 50px;
-  grid-template-rows: repeat(1, 1fr);
   grid-template-columns: 0.1fr 0.1fr 0.1fr 0.1fr;
   grid-gap: 5px;
   padding-left: 0;
@@ -31,6 +30,11 @@ body {
 .text:hover {
   transform: scale(1.1);
   cursor: pointer;
+}
+
+.photo {
+  width: 150px;
+  height: 150px;
 }
 
 .photo:hover {
