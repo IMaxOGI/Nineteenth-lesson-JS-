@@ -7,11 +7,8 @@ document.addEventListener("click", clickHandler);
 function getAlbums() {
   fetch("https://jsonplaceholder.typicode.com/albums")
     .then((response) => response.json())
-    .then((result) => {
-      createNewDivEl(result);
-      return result;
-    })
-    .then((result) => fetchAlbum(result[0].id))
+    .then((result) => createNewDivEl(result))
+    // .then((result) => fetchAlbum(result[0].id))
     .catch((error) => console.error("Error occured in getAlbums: ", error));
 }
 
@@ -41,6 +38,8 @@ function createNewDivEl(elements) {
     newDivEl.dataset.url = el.id;
     blockWithText.appendChild(newDivEl);
   });
+  // return elements;
+  fetchAlbum(elements[0].id);
 }
 
 function createNewImgEl(elements) {
